@@ -1,0 +1,87 @@
+{
+ "1": {
+  "class_type": "UNETLoader",
+  "inputs": {
+   "unet_name": "Fibo_2.0_Dev_int8_convrot_comfy.safetensors",
+   "weight_dtype": "default"
+  }
+ },
+ "2": {
+  "class_type": "CLIPLoader",
+  "inputs": {
+   "clip_name": "qwen3vl_4b_int8_convrot.safetensors",
+   "type": "fibo2",
+   "device": "default"
+  }
+ },
+ "3": {
+  "class_type": "VAELoader",
+  "inputs": {
+   "vae_name": "flux2-vae.safetensors"
+  }
+ },
+ "4": {
+  "class_type": "TextEncodeFibo2",
+  "inputs": {
+   "clip": [
+    "2",
+    0
+   ],
+   "prompt": "{\"short_description\":\"A candid smartphone selfie of two women in an outdoor dining area under bright sunlight, in front of a rustic stone wall and a wooden pergola against a clear blue sky.\",\"objects\":[{\"description\":\"A woman in the foreground taking the selfie, with shoulder-length brown hair, wearing a black strapless top and small hoop earrings.\",\"location\":\"center-right, foreground\",\"relative_size\":\"large within frame\"},{\"description\":\"Her companion just behind her, with long blonde waves, wearing a dark sleeveless top, white bottoms and a pearl necklace.\",\"location\":\"center-left, slightly behind\",\"relative_size\":\"large within frame\"}],\"background_setting\":\"An outdoor dining area with a rustic stone wall and a wooden pergola structure under a clear blue sky.\",\"lighting\":{\"conditions\":\"bright sunlight\",\"direction\":\"from above\",\"shadows\":\"crisp\"},\"aesthetics\":{\"composition\":\"close selfie framing, both faces in frame\",\"color_scheme\":\"natural daylight colours, blue sky, warm stone\",\"mood_atmosphere\":\"casual, friendly\"},\"photographic_characteristics\":{\"depth_of_field\":\"deep\",\"focus\":\"sharp on both faces\",\"camera_angle\":\"slightly above eye level, arm's-length selfie\"},\"style_medium\":\"photograph\",\"context\":\"A candid photograph taken with a smartphone.\",\"artistic_style\":\"realistic\"}",
+   "negative_prompt": "{\"short_description\":\"\",\"objects\":[{\"description\":\"the main subject\",\"texture\":\"smooth, featureless, plastic-like, airbrushed, no fine surface detail\",\"appearance_details\":\"soft blurred edges, simplified shapes, no fine detail\",\"skin_tone_and_texture\":\"waxy airbrushed skin, poreless, plastic smooth\"}],\"background_setting\":\"a plain seamless studio backdrop, perfectly smooth gradient, blurred and featureless, no visible texture\",\"lighting\":{},\"aesthetics\":{\"artifacts\":[\"oversaturated colours\",\"neon colour cast\",\"overexposed highlights\",\"lens flare\",\"slight blur\",\"motion blur\",\"haze\"]},\"photographic_characteristics\":{\"depth_of_field\":\"shallow, heavy bokeh obscuring most of the frame\",\"focus\":\"soft, slightly out of focus, lacking fine texture\"},\"style_medium\":\"\",\"context\":\"\",\"artistic_style\":\"\"}",
+   "width": 832,
+   "height": 1248,
+   "batch_size": 1
+  }
+ },
+ "5": {
+  "class_type": "KSampler",
+  "inputs": {
+   "model": [
+    "1",
+    0
+   ],
+   "positive": [
+    "4",
+    0
+   ],
+   "negative": [
+    "4",
+    1
+   ],
+   "latent_image": [
+    "4",
+    2
+   ],
+   "seed": 362855464313464,
+   "steps": 50,
+   "cfg": 5.0,
+   "sampler_name": "euler",
+   "scheduler": "simple",
+   "denoise": 1.0
+  }
+ },
+ "6": {
+  "class_type": "VAEDecode",
+  "inputs": {
+   "samples": [
+    "5",
+    0
+   ],
+   "vae": [
+    "3",
+    0
+   ]
+  }
+ },
+ "7": {
+  "class_type": "SaveImage",
+  "inputs": {
+   "images": [
+    "6",
+    0
+   ],
+   "filename_prefix": "rematch/img"
+  }
+ }
+}
